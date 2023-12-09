@@ -1,43 +1,26 @@
-function norm(value, min, max) {
-    return (value - min) / (max - min);
-  }
-  
-  function lerp(norm, min, max) {
-    return (max - min) * norm + min;
-  }
-  
-  function map(value, sourceMin, sourceMax, destMin, destMax) {
-    return lerp(norm(value, sourceMin, sourceMax), destMin, destMax);
-  }
-  
-  function map2(value, sourceMin, sourceMax, destMin, destMax, percent) {
-    return percent <= 0.5
-      ? map(value, sourceMin, sourceMax, destMin, destMax)
-      : map(value, sourceMin, sourceMax, destMax, destMin);
-  }
-  
-  function fisheye(el) {
-    let text = el.innerText.trim(),
-      numberOfChars = text.length;
-  
-    el.innerHTML =
-      "<span>" +
-      text
-        .split("")
-        .map(c => {
-          return c === " " ? "&nbsp;" : c;
-        })
-        .join("</span><span>") +
-      "</span>";
-  
-    el.querySelectorAll("span").forEach((c, i) => {
-      const skew = map(i, 0, numberOfChars - 1, -15, 15),
-        scale = map2(i, 0, numberOfChars - 1, 1, 3, i / numberOfChars),
-        letterSpace = map2(i, 0, numberOfChars - 1, 5, 20, i / numberOfChars);
-  
-      c.style.transform = "skew(" + skew + "deg) scale(1, " + scale + ")";
-      c.style.letterSpacing = letterSpace + "px";
-    });
-  }
-  
-  fisheye(document.querySelector("h1"));
+// Toggle the mobile menu
+const menuIcon = document.getElementById("menu-icon");
+const navbar = document.querySelector(".navbar");
+
+menuIcon.addEventListener("click", () => {
+  navbar.classList.toggle("active");
+});
+
+// Toggle dark mode
+const darkModeIcon = document.getElementById("darkmode");
+
+darkModeIcon.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+});
+
+// Change color after clicking on icon
+const socialIcons = document.querySelectorAll(".social i");
+
+socialIcons.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    const colors = ["#ff6f61", "#6b5b95", "#feb236"]; // Define your desired colors here
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+    icon.style.color = randomColor;
+  });
+});
